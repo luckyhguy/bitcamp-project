@@ -3,43 +3,47 @@ package bitcamp.java89.ems;
 import java.util.Scanner;
 
 public class ClassRoomController {
-  static ClassRoom[] classrooms = new ClassRoom[100];
-  static int length = 0;
-  static Scanner keyScan;
+  ClassRoom[] classrooms = new ClassRoom[100];
+  int length = 0;
+  Scanner keyScan;
 
-  static void doAdd() {
+public ClassRoomController(Scanner keyScan) {
+  this.keyScan = keyScan;
+}
 
-      while (length < classrooms.length) {
+  public void doAdd() {
+
+      while (length < this.classrooms.length) {
         ClassRoom classroom = new ClassRoom();
 
 
       System.out.print("이름(예:java89)?");
-      classroom.name = keyScan.nextLine();
+      classroom.name = this.keyScan.nextLine();
       System.out.print("종류(예:일반)?");
-      classroom.type = keyScan.nextLine();
+      classroom.type = this.keyScan.nextLine();
       System.out.print("크기(예:30)?");
-      classroom.size = Integer.parseInt(keyScan.nextLine());
+      classroom.size = Integer.parseInt(this.keyScan.nextLine());
       System.out.print("전자칠판(y/n)?");
-      classroom.electronicslate = (keyScan.nextLine().equals("y"))? true : false;
+      classroom.electronicslate = (this.keyScan.nextLine().equals("y"))? true : false;
       System.out.print("칠판(y/n)?");
-      classroom.blackboard = (keyScan.nextLine().equals("y")) ? true : false;
+      classroom.blackboard = (this.keyScan.nextLine().equals("y")) ? true : false;
       System.out.print("소방기구(y/n)?");
-      classroom.firefightingequipment = (keyScan.nextLine().equals("y")) ? true : false;
+      classroom.firefightingequipment = (this.keyScan.nextLine().equals("y")) ? true : false;
       System.out.print("사용중(y/n)?");
-      classroom.working = (keyScan.nextLine().equals("y")) ? true : false;
+      classroom.working = (this.keyScan.nextLine().equals("y")) ? true : false;
 
       classrooms[length++] = classroom;
 
       System.out.print("계속 입력하시겠습니까(y/n)?");
-      if (!keyScan.nextLine().equals("y"))
+      if (!this.keyScan.nextLine().equals("y"))
       break;
       }
   }
 
 
-    static void doList() {
-      for (int i = 0; i < length; i++ ) {
-      ClassRoom classroom = classrooms[i];
+  public void doList() {
+      for (int i = 0; i < this.length; i++ ) {
+      ClassRoom classroom = this.classrooms[i];
         System.out.printf("이름: %s,%s,%d,%b,%b,%b,%b\n",
         classroom.name,
         classroom.type,
@@ -53,11 +57,11 @@ public class ClassRoomController {
       }
     }
 
-    static void doView() {
-      String name = keyScan.nextLine();
-      for (int i = 0; i < length; i++ ) {
-        ClassRoom classroom = classrooms[i];
-        if(name.equals(classrooms[i].name))
+    public void doView() {
+      String name = this.keyScan.nextLine();
+      for (int i = 0; i < this.length; i++ ) {
+        ClassRoom classroom = this.classrooms[i];
+        if(name.equals(this.classrooms[i].name))
         System.out.printf("\n이름: \n%s,\n%s,\n%d,\n%b,\n%b,\n%b,\n%b\n",
         classroom.name,
         classroom.type,
@@ -70,4 +74,22 @@ public class ClassRoomController {
 
       }
     }
-  }
+
+
+    public void doDelete() {
+      System.out.print("삭제할 학생의 아이디는?");
+      String name = this.keyScan.nextLine();
+      for (int i = 0; i < this.length; i++ ) {
+
+      for (int x = i + 1; x < length; x++, i++) {
+        this.classrooms[i] = classrooms[x];
+      }
+        this.classrooms[--length] = null;
+
+        System.out.printf("%s 학생 정보를 삭제하였습니다.\n", name);
+         return; // 함수 실행 종료.
+       }
+
+     System.out.printf("%s 학생이 없습니다.", name);
+   }
+ }
