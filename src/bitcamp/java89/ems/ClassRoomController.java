@@ -92,4 +92,43 @@ public ClassRoomController(Scanner keyScan) {
 
      System.out.printf("%s 학생이 없습니다.", name);
    }
+
+
+   public void doUpdate() {
+     while (length < this.classrooms.length) {
+       System.out.print("변경할 학생의 아이디는?");
+       String name = this.keyScan.nextLine();
+
+       for (int i = 0; i < this.length; i++ ) {
+       if(name.equals(this.classrooms[i].name)) {
+
+         ClassRoom classroom = this.classrooms[i];
+
+         classroom.name = this.keyScan.nextLine();
+         System.out.print("종류(예:일반)?");
+         classroom.type = this.keyScan.nextLine();
+         System.out.print("크기(예:30)?");
+         classroom.size = Integer.parseInt(this.keyScan.nextLine());
+         System.out.print("전자칠판(y/n)?");
+         classroom.electronicslate = (this.keyScan.nextLine().equals("y"))? true : false;
+         System.out.print("칠판(y/n)?");
+         classroom.blackboard = (this.keyScan.nextLine().equals("y")) ? true : false;
+         System.out.print("소방기구(y/n)?");
+         classroom.firefightingequipment = (this.keyScan.nextLine().equals("y")) ? true : false;
+         System.out.print("사용중(y/n)?");
+         classroom.working = (this.keyScan.nextLine().equals("y")) ? true : false;
+
+         System.out.print("저장하시겠습니까(y/n)?");
+         if (!this.keyScan.nextLine().equals("y")) {
+           System.out.print("저장하였습니다.");
+
+         } else {
+           System.out.printf("변경을 취소하였습니다.");
+         }
+         return;
+       }
+     }
+     System.out.printf("%s 이라는 학생이 없습니다.", name);
+   }
  }
+}

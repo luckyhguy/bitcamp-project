@@ -4,38 +4,37 @@ package bitcamp.java89.ems;
 
 
   public class EduApp {
-  static Scanner keyScan = new Scanner(System.in);
+    static Scanner keyScan = new Scanner(System.in);
 
-  public static void main(String[] args) {
+    public static void main(String[] args) {
 
-  ClassRoomController classroomController = new ClassRoomController(keyScan);
+    ClassRoomController classroomController = new ClassRoomController(keyScan);
 
-  System.out.println("project-H 관리시스템에 오신걸 환영합니다.");
-
-
+    System.out.println("project-H 관리시스템에 오신걸 환영합니다.");
 
 
 
-      loop:
-      while (true) {
 
-      System.out.print("명령");
-        switch (keyScan.nextLine()) {
+    loop:
+    while (true) {
 
-        case "add" : classroomController.doAdd(); break;
+    System.out.print("명령");
+      switch (keyScan.nextLine()) {
 
-        case "list" : classroomController.doList(); break;
+      case "add" : classroomController.doAdd(); break;
 
-        case "view" : classroomController.doView(); break;
+      case "list" : classroomController.doList(); break;
 
-        case "delete" : classroomController.doDelete(); break;
+      case "view" : classroomController.doView(); break;
 
+      case "delete" : classroomController.doDelete(); break;
 
+      case "update" : classroomController.doUpdate(); break;
 
-        case "quit" : System.out.println("good-bye!"); break loop;
+      case "quit" : System.out.println("good-bye!"); break loop;
 
-        default : System.out.println("잘못입력하셨습니다.하산하세요!");
-        }
+      default : System.out.println("잘못입력하셨습니다.하산하세요!");
       }
     }
   }
+}
