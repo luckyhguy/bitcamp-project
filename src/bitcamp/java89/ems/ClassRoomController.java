@@ -3,15 +3,46 @@ package bitcamp.java89.ems;
 import java.util.Scanner;
 
 public class ClassRoomController {
-  ClassRoom[] classrooms = new ClassRoom[100];
-  int length = 0;
-  Scanner keyScan;
+  // 아래 인스턴스 변수들은 외부에서 사용할 일이 없기 때문에
+  // private으로 접근을 제한한다.
+  private ClassRoom[] classrooms = new ClassRoom[100];
+  private int length = 0;
+  private Scanner keyScan;
 
 public ClassRoomController(Scanner keyScan) {
   this.keyScan = keyScan;
 }
 
-  public void doAdd() {
+public void service() {
+  loop:
+  while (true) {
+
+  System.out.print("교실관리>");
+
+    switch (keyScan.nextLine()) {
+
+    case "add" : this.doAdd(); break;
+
+    case "list" : this.doList(); break;
+
+    case "view" : this.doView(); break;
+
+    case "delete" : this.doDelete(); break;
+
+    case "update" : this.doUpdate(); break;
+
+    case "main" :
+      break loop;
+
+    default :
+      System.out.println("잘못입력하셨습니다.하산하세요!");
+
+    }
+  }
+}
+
+
+  private void doAdd() {
 
       while (length < this.classrooms.length) {
         ClassRoom classroom = new ClassRoom();
@@ -39,9 +70,9 @@ public ClassRoomController(Scanner keyScan) {
       break;
       }
   }
+//아래 doXXX() 메서드들은 오직 service()에서만
 
-
-  public void doList() {
+  private void doList() {
       for (int i = 0; i < this.length; i++ ) {
       ClassRoom classroom = this.classrooms[i];
         System.out.printf("이름: %s,%s,%d,%b,%b,%b,%b\n",
@@ -57,7 +88,7 @@ public ClassRoomController(Scanner keyScan) {
       }
     }
 
-    public void doView() {
+    private void doView() {
       String name = this.keyScan.nextLine();
       for (int i = 0; i < this.length; i++ ) {
         ClassRoom classroom = this.classrooms[i];
@@ -76,7 +107,7 @@ public ClassRoomController(Scanner keyScan) {
     }
 
 
-    public void doDelete() {
+    private void doDelete() {
       System.out.print("삭제할 학생의 아이디는?");
       String name = this.keyScan.nextLine();
       for (int i = 0; i < this.length; i++ ) {
@@ -94,7 +125,7 @@ public ClassRoomController(Scanner keyScan) {
    }
 
 
-   public void doUpdate() {
+   private void doUpdate() {
      while (length < this.classrooms.length) {
        System.out.print("변경할 학생의 아이디는?");
        String name = this.keyScan.nextLine();

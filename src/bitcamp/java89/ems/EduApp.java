@@ -21,20 +21,23 @@ package bitcamp.java89.ems;
     System.out.print("명령");
       switch (keyScan.nextLine()) {
 
-      case "add" : classroomController.doAdd(); break;
+      case "menu" : doMenu(); break;
 
-      case "list" : classroomController.doList(); break;
+      case "go 1" : classroomController.service(); break;
 
-      case "view" : classroomController.doView(); break;
+      case "quit" :
+        System.out.println("Good bye!");
 
-      case "delete" : classroomController.doDelete(); break;
+      break loop;
 
-      case "update" : classroomController.doUpdate(); break;
-
-      case "quit" : System.out.println("good-bye!"); break loop;
-
-      default : System.out.println("잘못입력하셨습니다.하산하세요!");
+      default:
+        System.out.println("잘못입력하셨습니다.하산하세요!");
       }
     }
+  }
+  static void doMenu() {
+    System.out.println("[메뉴]");
+    System.out.println("1. 학생관리");
+    System.out.println("메뉴 번호?");
   }
 }
