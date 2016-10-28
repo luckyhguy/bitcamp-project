@@ -1,15 +1,21 @@
 package bitcamp.java89.ems;
-import java.util.Scanner;
-public class EduApp {
-  public static void main(String[] args) {
-    System.out.println("project-H 관리시스템에 오신걸 환영합니다.");
+  import java.util.Scanner;
+    public class EduApp {
+      public static void main(String[] args) {
+        System.out.println("project-H 관리시스템에 오신걸 환영합니다.");
 
 
-    //1) 사용자로부터 값을 입력받을 때 사용할 입력 도구 준비
+    // 여러명의 학생 정보를 입력하기 위한 레퍼런스 배열을 만든다.
+    ClassRoom[] classrooms = new ClassRoom[100];
+    int length = 0;   // 레퍼런스 배열에 몇명의 학생 정보를 저장했는지 갯수를 보관한다.
+                      // 레퍼런스 배열에 몇 개의 Student 인스턴스가 들어 있는지 그 갯수를 보관한다.
+
     Scanner keyScan = new Scanner(System.in);
 
+    // 반복 해서 입력 받는다.
 
-    ClassRoom classroom = new ClassRoom();
+    while (length < classrooms.length) {
+      ClassRoom classroom = new ClassRoom();
 
     System.out.print("이름(예:java89)?");
     classroom.name = keyScan.nextLine();
@@ -33,15 +39,33 @@ public class EduApp {
     System.out.print("사용중(y/n)?");
     classroom.working = (keyScan.nextLine().equals("y")) ? true : false;
 
-    System.out.printf("이름: %s\n", classroom.name);
-    System.out.printf("종류: %s\n", classroom.type);
-    System.out.printf("크기: %d\n", classroom.size);
-    System.out.printf("전자칠판: %b\n", classroom.electronicslate);
-    System.out.printf("칠판: %b\n", classroom.blackboard);
-    System.out.printf("소방기구: %b\n", classroom.firefightingequipment);
-    System.out.printf("사용중: %b\n", classroom.working);
+    classrooms[length++] = classroom;
 
 
-  }
+    System.out.print("계속 입력하시겠습니까(y/n)?");
+    if (!keyScan.nextLine().equals("y"))
+    break;
+    }
+
+    printclassroomList(classrooms, length);
+
 
 }
+
+  static void printclassroomList(ClassRoom[] classrooms, int length) {
+
+    for (int i = 0; i < length; i++ ) {
+    ClassRoom classroom = classrooms[i];
+      System.out.printf("이름: %s,%s,%d,%b,%b,%b,%b\n",
+      classroom.name,
+      classroom.type,
+      classroom.size,
+      ((classroom.electronicslate)?"yes":"no"),
+      ((classroom.blackboard)?"yes":"no"),
+      ((classroom.firefightingequipment)?"yes":"no"),
+      ((classroom.working)?"yes":"no")
+      );
+
+    }
+  }
+  }
