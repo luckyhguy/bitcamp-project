@@ -3,37 +3,37 @@ package bitcamp.java89.ems;
 import java.util.Scanner;
 
 public class ClassRoomController {
-  // 아래 인스턴스 변수들은 외부에서 사용할 일이 없기 때문에
-  // private으로 접근을 제한한다.
-  private ClassRoom[] classrooms = new ClassRoom[100];
-  private int length = 0;
+  private Box head;
+  private Box tail;
+  private int length;
   private Scanner keyScan;
 
 public ClassRoomController(Scanner keyScan) {
+  head = new Box();
+  tail = head;
+  length = 0;
   this.keyScan = keyScan;
 }
 
 public void service() {
   loop:
   while (true) {
+    System.out.print("교실관리>");
+    String command = keyScan.nextLine().toLowerCase();
 
-  System.out.print("교실관리>");
-
-    switch (keyScan.nextLine()) {
+    switch (command) {
 
     case "add" : this.doAdd(); break;
-
     case "list" : this.doList(); break;
-
     case "view" : this.doView(); break;
-
     case "delete" : this.doDelete(); break;
-
     case "update" : this.doUpdate(); break;
+
+
+    //case "update" : this.doUpdate(); break;
 
     case "main" :
       break loop;
-
     default :
       System.out.println("잘못입력하셨습니다.하산하세요!");
 
@@ -43,10 +43,9 @@ public void service() {
 
 
   private void doAdd() {
-
-      while (length < this.classrooms.length) {
+    // 반복해서 입력한다.
+      while (true) {
         ClassRoom classroom = new ClassRoom();
-
 
       System.out.print("이름(예:java89)?");
       classroom.name = this.keyScan.nextLine();
@@ -63,7 +62,11 @@ public void service() {
       System.out.print("사용중(y/n)?");
       classroom.working = (this.keyScan.nextLine().equals("y")) ? true : false;
 
-      classrooms[length++] = classroom;
+      tail.value = classroom;
+      tail.next = new Box();
+      tail = tail.next;
+      length++;
+
 
       System.out.print("계속 입력하시겠습니까(y/n)?");
       if (!this.keyScan.nextLine().equals("y"))
@@ -73,9 +76,10 @@ public void service() {
 //아래 doXXX() 메서드들은 오직 service()에서만
 
   private void doList() {
-      for (int i = 0; i < this.length; i++ ) {
-      ClassRoom classroom = this.classrooms[i];
-        System.out.printf("이름: %s,%s,%d,%b,%b,%b,%b\n",
+    Box currentBox = head;
+    while (currentBox != null && currentBox != tail) {
+      ClassRoom classroom = (ClassRoom)currentBox.value;
+      System.out.printf("이름: %s,%s,%d,%b,%b,%b,%b\n",
         classroom.name,
         classroom.type,
         classroom.size,
@@ -83,83 +87,122 @@ public void service() {
         ((classroom.blackboard)?"yes":"no"),
         ((classroom.firefightingequipment)?"yes":"no"),
         ((classroom.working)?"yes":"no")
-        );
+      );
 
-      }
+      currentBox = currentBox.next;
     }
+  }
+
+
 
     private void doView() {
-      String name = this.keyScan.nextLine();
-      for (int i = 0; i < this.length; i++ ) {
-        ClassRoom classroom = this.classrooms[i];
-        if(name.equals(this.classrooms[i].name))
-        System.out.printf("\n이름: \n%s,\n%s,\n%d,\n%b,\n%b,\n%b,\n%b\n",
-        classroom.name,
-        classroom.type,
-        classroom.size,
-        ((classroom.electronicslate) ? "yes":"no"),
-        ((classroom.blackboard) ? "yes":"no"),
-        ((classroom.firefightingequipment)?"yes":"no"),
-        ((classroom.working)?"yes":"no")
-        );
+      System.out.print("변경할 강의실의 인덱스? ");
+      int index = Integer.parseInt(this.keyScan.nextLine());
+
+
+      if (index < 0 || index >= length) {
+        System.out.println("인덱스가 유효하지 않습니다.");
+        return;
+      }
+
+      Box currentBox = head;
+      for (int i = 0; i < index; i++) {
+        currentBox = currentBox.next;
+      }
+
+      ClassRoom classroom = (ClassRoom)currentBox.value;
+
+      System.out.printf("\n이름: \n%s,\n%s,\n%d,\n%b,\n%b,\n%b,\n%b\n",
+      classroom.name,
+      classroom.type,
+      classroom.size,
+      ((classroom.electronicslate) ? "yes":"no"),
+      ((classroom.blackboard) ? "yes":"no"),
+      ((classroom.firefightingequipment)?"yes":"no"),
+      ((classroom.working)?"yes":"no"));
 
       }
-    }
+
 
 
     private void doDelete() {
-      System.out.print("삭제할 학생의 아이디는?");
-      String name = this.keyScan.nextLine();
-      for (int i = 0; i < this.length; i++ ) {
+      System.out.print("삭제할 강의실의 인덱스?");
+      int index = Integer.parseInt(keyScan.nextLine());
 
-      for (int x = i + 1; x < length; x++, i++) {
-        this.classrooms[i] = classrooms[x];
+      if (index < 0 || index >= length) {
+        System.out.println("인덱스가 유효하지 않습니다.");
+        return;
       }
-        this.classrooms[--length] = null;
 
-        System.out.printf("%s 학생 정보를 삭제하였습니다.\n", name);
-         return; // 함수 실행 종료.
-       }
+      ClassRoom deletedClassRoom = null;
+      if (index == 0) {
+        deletedClassRoom = (ClassRoom)head.value;
+        head = head.next;
+      } else {
+        Box currentBox = head;
+        for (int i = 0; i < (index - 1); i++) {
+        currentBox = currentBox.next;
+        }
+        deletedClassRoom = (ClassRoom)currentBox.next.value;
+        currentBox.next = currentBox.next.next;
+      }
 
-     System.out.printf("%s 학생이 없습니다.", name);
-   }
+      length--;
+      System.out.printf("%s 학생 정보를 삭제하였습니다.\n", deletedClassRoom.name);
+    }
 
 
    private void doUpdate() {
-     while (length < this.classrooms.length) {
-       System.out.print("변경할 학생의 아이디는?");
-       String name = this.keyScan.nextLine();
 
-       for (int i = 0; i < this.length; i++ ) {
-       if(name.equals(this.classrooms[i].name)) {
 
-         ClassRoom classroom = this.classrooms[i];
 
-         classroom.name = this.keyScan.nextLine();
-         System.out.print("종류(예:일반)?");
-         classroom.type = this.keyScan.nextLine();
-         System.out.print("크기(예:30)?");
-         classroom.size = Integer.parseInt(this.keyScan.nextLine());
-         System.out.print("전자칠판(y/n)?");
-         classroom.electronicslate = (this.keyScan.nextLine().equals("y"))? true : false;
-         System.out.print("칠판(y/n)?");
-         classroom.blackboard = (this.keyScan.nextLine().equals("y")) ? true : false;
-         System.out.print("소방기구(y/n)?");
-         classroom.firefightingequipment = (this.keyScan.nextLine().equals("y")) ? true : false;
-         System.out.print("사용중(y/n)?");
-         classroom.working = (this.keyScan.nextLine().equals("y")) ? true : false;
+       System.out.print("변경할 강의실의 인덱스? ");
+       int index = Integer.parseInt(this.keyScan.nextLine());
 
-         System.out.print("저장하시겠습니까(y/n)?");
-         if (!this.keyScan.nextLine().equals("y")) {
-           System.out.print("저장하였습니다.");
-
-         } else {
-           System.out.printf("변경을 취소하였습니다.");
-         }
+       // 유효한 인덱스인지 검사
+       if (index < 0 || index >= length) {
+         System.out.println("인덱스가 유효하지 않습니다.");
          return;
        }
-     }
-     System.out.printf("%s 이라는 학생이 없습니다.", name);
-   }
- }
-}
+       //강의실 정보가 저장된 장소를 찾는다.
+       Box currentBox = head;
+       for (int i = 0; i < index; i++) {
+         currentBox = currentBox.next;
+       }
+       // 찾은 상자에서 변경할 학생의 정보를 꺼낸다.
+       ClassRoom oldClassRoom = (ClassRoom)currentBox.value;
+
+
+      ClassRoom classroom = new ClassRoom();
+
+      classroom.name = this.keyScan.nextLine();
+      System.out.printf("종류(예:일반)?", oldClassRoom.name);
+
+      classroom.type = this.keyScan.nextLine();
+      System.out.printf("크기(예:30)?", oldClassRoom.type);
+
+      classroom.size = Integer.parseInt(this.keyScan.nextLine());
+      System.out.print("전자칠판(y/n)?");
+
+      classroom.electronicslate = (this.keyScan.nextLine().equals("y"))? true : false;
+      System.out.print("칠판(y/n)?");
+
+      classroom.blackboard = (this.keyScan.nextLine().equals("y")) ? true : false;
+      System.out.print("소방기구(y/n)?");
+
+      classroom.firefightingequipment = (this.keyScan.nextLine().equals("y")) ? true : false;
+      System.out.print("사용중(y/n)?");
+
+      classroom.working = (this.keyScan.nextLine().equals("y")) ? true : false;
+
+      System.out.print("저장하시겠습니까(y/n)?");
+      if (!this.keyScan.nextLine().equals("y")) {
+        classroom.name = oldClassRoom.name;
+        currentBox.value = classroom;
+        System.out.println("저장하였습니다.");
+        } else {
+          System.out.println("변경을 취소하였습니다.");
+        }
+
+      }
+    }
