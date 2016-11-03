@@ -3,15 +3,11 @@ package bitcamp.java89.ems;
 import java.util.Scanner;
 
 public class ClassRoomController {
-  private Box head;
-  private Box tail;
-  private int length;
+  private LinkedList list;
   private Scanner keyScan;
 
 public ClassRoomController(Scanner keyScan) {
-  head = new Box();
-  tail = head;
-  length = 0;
+  list = new list
   this.keyScan = keyScan;
 }
 
@@ -62,11 +58,7 @@ public void service() {
       System.out.print("사용중(y/n)?");
       classroom.working = (this.keyScan.nextLine().equals("y")) ? true : false;
 
-      tail.value = classroom;
-      tail.next = new Box();
-      tail = tail.next;
-      length++;
-
+      list.add(classroom);
 
       System.out.print("계속 입력하시겠습니까(y/n)?");
       if (!this.keyScan.nextLine().equals("y"))
@@ -76,20 +68,19 @@ public void service() {
 //아래 doXXX() 메서드들은 오직 service()에서만
 
   private void doList() {
-    Box currentBox = head;
-    while (currentBox != null && currentBox != tail) {
-      ClassRoom classroom = (ClassRoom)currentBox.value;
-      System.out.printf("이름: %s,%s,%d,%b,%b,%b,%b\n",
-        classroom.name,
-        classroom.type,
-        classroom.size,
-        ((classroom.electronicslate)?"yes":"no"),
-        ((classroom.blackboard)?"yes":"no"),
-        ((classroom.firefightingequipment)?"yes":"no"),
-        ((classroom.working)?"yes":"no")
+      for (int i = 0; i < list.size(); i++) {
+        ClassRoom classroom = (ClassRoom)list.get(i);
+        System.out.printf("이름: %s,%s,%d,%b,%b,%b,%b\n",
+          classroom.name,
+          classroom.type,
+          classroom.size,
+          ((classroom.electronicslate)?"yes":"no"),
+          ((classroom.blackboard)?"yes":"no"),
+          ((classroom.firefightingequipment)?"yes":"no"),
+          ((classroom.working)?"yes":"no")
       );
 
-      currentBox = currentBox.next;
+
     }
   }
 
@@ -100,17 +91,15 @@ public void service() {
       int index = Integer.parseInt(this.keyScan.nextLine());
 
 
-      if (index < 0 || index >= length) {
+      if (index < 0 || index >= list.size()) {
         System.out.println("인덱스가 유효하지 않습니다.");
         return;
       }
 
-      Box currentBox = head;
-      for (int i = 0; i < index; i++) {
-        currentBox = currentBox.next;
+
       }
 
-      ClassRoom classroom = (ClassRoom)currentBox.value;
+      ClassRoom classroom = (ClassRoom)list.get(index);
 
       System.out.printf("\n이름: \n%s,\n%s,\n%d,\n%b,\n%b,\n%b,\n%b\n",
       classroom.name,
@@ -129,27 +118,19 @@ public void service() {
       System.out.print("삭제할 강의실의 인덱스?");
       int index = Integer.parseInt(keyScan.nextLine());
 
-      if (index < 0 || index >= length) {
+      if (index < 0 || index >= list.size) {
         System.out.println("인덱스가 유효하지 않습니다.");
         return;
       }
 
-      ClassRoom deletedClassRoom = null;
-      if (index == 0) {
-        deletedClassRoom = (ClassRoom)head.value;
-        head = head.next;
-      } else {
-        Box currentBox = head;
-        for (int i = 0; i < (index - 1); i++) {
-        currentBox = currentBox.next;
-        }
-        deletedClassRoom = (ClassRoom)currentBox.next.value;
-        currentBox.next = currentBox.next.next;
-      }
+      ClassRoom deletedClassRoom = list.remove(index);
 
-      length--;
+
+
+
       System.out.printf("%s 학생 정보를 삭제하였습니다.\n", deletedClassRoom.name);
     }
+  }
 
 
    private void doUpdate() {
@@ -160,16 +141,11 @@ public void service() {
        int index = Integer.parseInt(this.keyScan.nextLine());
 
        // 유효한 인덱스인지 검사
-       if (index < 0 || index >= length) {
+       if (index < 0 || index >= list.size()) {
          System.out.println("인덱스가 유효하지 않습니다.");
          return;
        }
-       //강의실 정보가 저장된 장소를 찾는다.
-       Box currentBox = head;
-       for (int i = 0; i < index; i++) {
-         currentBox = currentBox.next;
-       }
-       // 찾은 상자에서 변경할 학생의 정보를 꺼낸다.
+
        ClassRoom oldClassRoom = (ClassRoom)currentBox.value;
 
 
@@ -198,7 +174,8 @@ public void service() {
       System.out.print("저장하시겠습니까(y/n)?");
       if (!this.keyScan.nextLine().equals("y")) {
         classroom.name = oldClassRoom.name;
-        currentBox.value = classroom;
+        list.set(index, classroom);
+
         System.out.println("저장하였습니다.");
         } else {
           System.out.println("변경을 취소하였습니다.");
