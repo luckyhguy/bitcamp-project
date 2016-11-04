@@ -29,6 +29,5 @@ public class ClassRoom {
 
 
 /*
-# System.in
-- 시스템 기본 입력 장치 (키보드)의 정보를 갖고 있는 변수
+
 */
