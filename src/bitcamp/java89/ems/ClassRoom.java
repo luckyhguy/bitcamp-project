@@ -13,7 +13,6 @@ public class ClassRoom {
 
   public ClassRoom() {}
 
-
   public ClassRoom(String name, String type, int size, boolean electronicslate, boolean blackboard, boolean firefightingequipment, boolean working){
     this.name = name;
     this.type = type;

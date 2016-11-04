@@ -1,16 +1,14 @@
-[v0.9]
+[v1.0]
 구현할 기능:
 
-=> Linked List 클래스를 만든다.
-=> Linked List 를 ClassRoomController에 적용한다.
+=> Linked List 제네릭을 적용한다.
+=> Linked List 를 사용하는 모든 코드에서 타입 캐스팅을 제거한다.
 
 산출물:
 => Student.java
 => EduApp.java (변경)
-=> ClassRoomController.java (추가)
 => XxxController.java(변경)
-=> Box.java(추가)
 => LinkedList.java (추가)
+
 학습 목표:
-=> LinkedList를 만들 수 있다.
-=> LinkedList를 통해 
+=> 제네릭을 클래스에 적용하고 제네릭이 적용된 클래스를 사용할 수있다.
