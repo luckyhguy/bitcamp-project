@@ -1,15 +1,12 @@
-[v1.1]
+[v1.2]
 구현할 기능:
-=> LinkedList에 예외처리 코드 추가 
-=> ClassRoomController
+=> 우리가 만든 LinkedList 대신 자바에서 제공하는 ArrayList 사용하여 데이터 목록을 다룬다.
 
 산출물:
 => Student.java
 => EduApp.java
 => XxxController.java (변경)
-=> LinkedList.java (변경)
+=> LinkedList.java (제거)
 
 학습목표:
-=> 메서드에 예외 던지는 기능을 추가하고, 
-   예외를 던지는 메서드를 호출하는 방법을 안다.
-=> 오류가 발생하더라도 시스템을 멈추지 않고 실행하는 방법을 이해한다.
+=> 자바에서 제공하는 ArrayList를 사용할 수 있다.
