@@ -5,10 +5,12 @@ package bitcamp.java89.ems;
   public class EduApp {
     static Scanner keyScan = new Scanner(System.in);
     static ClassRoomController classroomController;
+    static ContactController contactController;
 
     public static void main(String[] args) {
      classroomController = new ClassRoomController(keyScan);
-
+     contactController = new ContactController(keyScan);
+     
     System.out.println("project-H 관리시스템에 오신걸 환영합니다.");
 
     loop:
@@ -21,6 +23,7 @@ package bitcamp.java89.ems;
       case "go 1" : classroomController.service(); break;
   //  case "go 2" : bookController.service(); break;
   //  case "go 3" : lecture.service(); break;
+
       case "save" : doSave(); break;
       case "quit" : 
       if (doQuit()) 
@@ -34,7 +37,11 @@ package bitcamp.java89.ems;
   static void doMenu() {
     System.out.println("[메뉴]");
     System.out.println("1.교실 관리");
+    System.out.println("4.연락처 관리");
     System.out.println("메뉴 이동은 'go 메뉴번호'를 입력하세요.");
+    System.out.println("[명령]");
+    System.out.println("save  데이터 저장");
+    System.out.println("quit  프로그램 종료");
   }
 
   static boolean doQuit() {

@@ -1,13 +1,16 @@
-#[v1.4]
+#[v1.5]
 ####구현할 기능:
-- 직렬화 방식을 사용하여 데이터를 저장하고 읽는다.
+- 연락처 관리 기능
+
 ####산출물:
-=> Student.java (변경)
-=> EduApp.java 
-=> XxxController.java (변경)
+=> ClassRoom.java
+=> ClassRoomController.java
+=> EduApp.java  (변경)
+=> Contact.java (추가)
+=> ContactController.java (추가)
 
 학습목표:
-- 직렬화 기법을 이용하여 인스턴스의 값을 저장하고 읽을 수 있다.
+- 직렬화 프로그램 및 유지 보수 연
 
-tip!
+
 
