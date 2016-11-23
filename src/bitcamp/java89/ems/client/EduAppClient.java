@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class EduAppClient {
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
     Scanner keyScan = new Scanner(System.in);
     System.out.print("서버주소? ");
     String serverAddr = keyScan.nextLine();
@@ -20,13 +20,8 @@ public class EduAppClient {
       
       while (true) {
         // 서버가 보낸 데이터를 읽는다. 빈 줄을 입력 받을 때까지.
-      	boolean firstLine = true;
+        boolean firstLine = true;
         while (true) {
-        	if (!firstLine) {
-        		System.out.println();
-        	} else {
-        		firstLine = false;
-        	}
           String message = in.nextLine();
           if (message.length() == 0) {
             break;
@@ -52,7 +47,3 @@ public class EduAppClient {
     }
   }
 }
-
-	
-
-
