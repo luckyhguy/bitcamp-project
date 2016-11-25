@@ -26,9 +26,11 @@ public class ContactDao {
     this.load(); 
   }
 
-  public boolean isChanged() {
-    return changed;
+  public boolean isChaged() {
+  	return changed;
   }
+    
+  
 
   @SuppressWarnings("unchecked")
   private void load() {
@@ -61,8 +63,6 @@ public class ContactDao {
 
     out.writeObject(list);
     
-    changed = false;
-
     out.close();
     out0.close();
   }

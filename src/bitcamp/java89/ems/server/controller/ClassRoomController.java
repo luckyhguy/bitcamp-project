@@ -70,7 +70,7 @@ public class ClassRoomController {
 	private void doList() {
 		ArrayList<ClassRoom> list = classroomDao.getList();
 		for (ClassRoom classroom : list) {
-			out.printf("이름: %s,%s,%d,%b,%b,%b,%b\n", classroom.getName(), classroom.getType(), classroom.getSize(),
+			out.printf("%s,%s,%d,%b,%b,%b,%b\n", classroom.getName(), classroom.getType(), classroom.getSize(),
 					((classroom.isElectronicslate()) ? "yes" : "no"), ((classroom.isBlackboard()) ? "yes" : "no"),
 					((classroom.isFirefightingequipment()) ? "yes" : "no"), ((classroom.isWorking()) ? "yes" : "no"));
 		}
