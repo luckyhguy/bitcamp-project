@@ -11,7 +11,7 @@ import bitcamp.java89.ems.server.vo.Contact;
 
 public class ContactDao {
   static ContactDao obj;
-  private String filename = "contact-v1.7.data";
+  private String filename = "contact-v1.8.data";
   private ArrayList<Contact> list;
   private boolean changed;
   

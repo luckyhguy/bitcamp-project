@@ -13,7 +13,7 @@ import bitcamp.java89.ems.server.vo.ClassRoom;
 public class ClassRoomDao {
 	static ClassRoomDao obj;
 	
-	private String filename = "classroom-v1.7.data";
+	private String filename = "classroom-v1.8.data";
 	private ArrayList<ClassRoom> list;
 	private boolean changed;
   
